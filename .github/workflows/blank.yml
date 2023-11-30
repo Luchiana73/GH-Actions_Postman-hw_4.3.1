@@ -34,5 +34,5 @@ jobs:
         run: |
          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
          postman login --with-api-key PMAK-6568d3767e17a20038c76211-26c82de7ddd52b7f5f50ea0e8d42cbba48
-         postman collection run "19592828-db3d0477-2305-4048-8b22-1e1ca98a152a" -e "19592828-22f4df1d-4d9e-4953-a47b-a3a1ebb384f5"
+         postman collection run "postman/collections/SqlVerifier.json" -e "environment.json"
 
