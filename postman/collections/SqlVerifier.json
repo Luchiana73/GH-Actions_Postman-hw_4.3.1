@@ -1,0 +1,2355 @@
+{
+	"info": {
+		"_postman_id": "db3d0477-2305-4048-8b22-1e1ca98a152a",
+		"name": "SqlVerifier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_uid": "19592828-db3d0477-2305-4048-8b22-1e1ca98a152a"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get admin token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "aff95649-ce4c-4fcf-8196-c3e495859d72",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "46fa885d-542f-4b86-b223-9bfd85a06d0b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"admin\",\r\n    \"rememberMe\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register my admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dfba219b-4b7d-4747-ad79-4e19b589d05d",
+								"exec": [
+									"const requestData = JSON.parse(request.data)\r",
+									"console.log(requestData)\r",
+									"\r",
+									"const lowercaseLogin = requestData.login.toLowerCase();\r",
+									"pm.environment.set(\"myAdminLogin\", lowercaseLogin);\r",
+									"\r",
+									"const lowercaseEmail = requestData.email.toLowerCase();\r",
+									"pm.environment.set(\"myAdminEmail\", lowercaseEmail);\r",
+									"\r",
+									"pm.environment.set(\"myAdminPassword\", requestData.password);\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.request.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6d1e7161-c59f-4623-84cb-fbf3e0b028f8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"login\": \"{{$randomUserName}}\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"imageUrl\": \"string\",\r\n    \"activated\": true,\r\n    \"langKey\": \"string\",\r\n    \"createdBy\": \"string\",\r\n    \"createdDate\": \"2023-11-28T11:22:41.406Z\",\r\n    \"lastModifiedBy\": \"string\",\r\n    \"lastModifiedDate\": \"2023-11-28T11:22:41.406Z\",\r\n    \"authorities\": [\r\n        \"string\"\r\n    ],\r\n    \"password\": \"{{$randomPassword}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register teacher",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ce106cea-502b-4393-8b5d-c1826a5e2f09",
+								"exec": [
+									"const requestData = JSON.parse(request.data)\r",
+									"console.log(requestData)\r",
+									"\r",
+									"const lowercaseLogin = requestData.login.toLowerCase();\r",
+									"pm.environment.set(\"teacherLogin\", lowercaseLogin);\r",
+									"\r",
+									"const lowercaseEmail = requestData.email.toLowerCase();\r",
+									"pm.environment.set(\"teacherEmail\", lowercaseEmail);\r",
+									"\r",
+									"pm.environment.set(\"teacherPassword\", requestData.password);\r",
+									"\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.request.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5ab6a2da-759a-49a7-90d4-4522f8956054",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"login\": \"{{$randomUserName}}\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"imageUrl\": \"string\",\r\n    \"activated\": true,\r\n    \"langKey\": \"it\",\r\n    \"createdBy\": \"string\",\r\n    \"createdDate\": \"2023-11-22T10:49:52.690Z\",\r\n    \"lastModifiedBy\": \"string\",\r\n    \"lastModifiedDate\": \"2023-11-22T10:49:52.690Z\",\r\n    \"authorities\": [\r\n        \"string\"\r\n    ],\r\n    \"password\": \"{{$randomPassword}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ee87fed9-7a49-41ec-a075-7316ae339420",
+								"exec": [
+									"const requestData = JSON.parse(request.data)\r",
+									"console.log(requestData)\r",
+									"\r",
+									"const lowercaseLogin = requestData.login.toLowerCase();\r",
+									"pm.environment.set(\"studentLogin\", lowercaseLogin);\r",
+									"\r",
+									"const lowercaseEmail = requestData.email.toLowerCase();\r",
+									"pm.environment.set(\"studentEmail\", lowercaseEmail);\r",
+									"\r",
+									"pm.environment.set(\"studentPassword\", requestData.password);\r",
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0e7f347c-41a0-4cd5-819f-c829ba881f22",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"login\": \"{{$randomUserName}}\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    \"imageUrl\": \"string\",\r\n    \"activated\": true,\r\n    \"langKey\": \"it\",\r\n    \"createdBy\": \"string\",\r\n    \"createdDate\": \"2023-11-22T10:49:52.690Z\",\r\n    \"lastModifiedBy\": \"string\",\r\n    \"lastModifiedDate\": \"2023-11-22T10:49:52.690Z\",\r\n    \"authorities\": [\r\n        \"string\"\r\n    ],\r\n    \"password\": \"{{$randomPassword}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register user with empty field password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2ad61def-3c0f-4e4e-a973-f3404e81ffca",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Bad Request\");\r",
+									"});\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f106d522-b575-4550-a2bf-4203417ca465",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 0,\r\n    \"login\": \"cat\",\r\n    \"firstName\": \"string\",\r\n    \"lastName\": \"string\",\r\n    \"email\": \"cat@cat.com\",\r\n    \"imageUrl\": \"string\",\r\n    \"activated\": true,\r\n    \"langKey\": \"it\",\r\n    \"createdBy\": \"string\",\r\n    \"createdDate\": \"2023-11-22T10:49:52.690Z\",\r\n    \"lastModifiedBy\": \"string\",\r\n    \"lastModifiedDate\": \"2023-11-22T10:49:52.690Z\",\r\n    \"authorities\": [\r\n        \"string\"\r\n    ],\r\n    \"password\":\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my admin account ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e8aee817-24c6-4162-86b6-7133d4696e7f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"@\");\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"myAdminId\", response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "0c128e01-c50e-4dea-aa24-1db12b401e89",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "{{myAdminLogin}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get teacher account ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b8317ab-4ca6-4abe-98e5-a5b53bd9e244",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.firstName).to.be.string;\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"teacherId\", response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "bd5602af-3819-4407-8480-83faec0aa8f7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAdminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "{{teacherLogin}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get student account ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b48071fa-0a45-4915-9716-eeeda84b1158",
+								"exec": [
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"studentId\", response.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "4980da07-9e71-4f53-af55-1859d0f002a3",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAdminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users/:login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users",
+								":login"
+							],
+							"variable": [
+								{
+									"key": "login",
+									"value": "{{studentLogin}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate my admin account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9367aa9-95db-40fe-9868-6f30012a8664",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.request.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "82e4306a-68fc-4c37-9426-057479058ffc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{myAdminId}},\r\n  \"login\": \"{{myAdminLogin}}\",\r\n  \"firstName\": null,\r\n  \"lastName\": null,\r\n  \"email\": \"{{myAdminEmail}}\",\r\n  \"imageUrl\": null,\r\n  \"activated\": \"true\",\r\n  \"langKey\": \"en\",\r\n  \"createdBy\": \"anonymousUser\",\r\n  \"createdDate\": \"2023-11-22T10:48:18.811024Z\",\r\n  \"lastModifiedBy\": \"anonymousUser\",\r\n  \"lastModifiedDate\": \"2023-11-22T10:48:18.811024Z\",\r\n  \"authorities\": [\r\n    \"ROLE_ADMIN\"\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate teacher account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9ae1880d-e8dd-4aa4-9359-c52c6328b577",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.request.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "5e68ce94-6e56-4181-83d8-5cb5be3312e2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAdminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{teacherId}},\r\n  \"login\": \"{{teacherLogin}}\",\r\n  \"firstName\": null,\r\n  \"lastName\": null,\r\n  \"email\": \"{{teacherEmail}}\",\r\n  \"imageUrl\": null,\r\n  \"activated\": \"true\",\r\n  \"langKey\": \"en\",\r\n  \"createdBy\": \"anonymousUser\",\r\n  \"createdDate\": \"2023-11-22T10:48:18.811024Z\",\r\n  \"lastModifiedBy\": \"anonymousUser\",\r\n  \"lastModifiedDate\": \"2023-11-22T10:48:18.811024Z\",\r\n  \"authorities\": [\r\n    \"ROLE_USER_TEACHER\"\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate student account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6a257cad-6c45-4d6f-8051-c79ec7075b92",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.request.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "81b87af8-e251-4008-9385-6d371c13d048",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAdminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": {{studentId}},\r\n  \"login\": \"{{studentLogin}}\",\r\n  \"firstName\": null,\r\n  \"lastName\": null,\r\n  \"email\": \"{{studentEmail}}\",\r\n  \"imageUrl\": null,\r\n  \"activated\": \"true\",\r\n  \"langKey\": \"en\",\r\n  \"createdBy\": \"anonymousUser\",\r\n  \"createdDate\": \"2023-11-22T10:48:18.811024Z\",\r\n  \"lastModifiedBy\": \"anonymousUser\",\r\n  \"lastModifiedDate\": \"2023-11-22T10:48:18.811024Z\",\r\n  \"authorities\": [\r\n    \"ROLE_USER_STUDENT\"\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/admin/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my admin token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cb6622d8-2d62-4707-8500-93a7a173e7bd",
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).toString;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"myAdminToken\", response.id_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "e6f22bf4-b679-464c-a3dc-7098d1b95f57",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"{{myAdminLogin}}\",\r\n  \"password\": \"{{myAdminPassword}}\",\r\n  \"rememberMe\": true\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get teacher token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "255bac64-6488-4e0f-b6f4-053dec7f6232",
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).toString;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"teacherToken\", response.id_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "f2a03c2f-8e10-46db-80e5-14cb0b9506a1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"{{teacherLogin}}\",\r\n  \"password\": \"{{teacherPassword}}\",\r\n  \"rememberMe\": true\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get student token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "255bac64-6488-4e0f-b6f4-053dec7f6232",
+								"exec": [
+									"pm.test(\"Body matches string\", function () {\r",
+									"    pm.expect(pm.response.text()).toString;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const response = pm.response.json()\r",
+									"pm.environment.set(\"studentToken\", response.id_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "08b1aff4-45f6-4734-b53c-a7edee744fc0",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"{{studentLogin}}\",\r\n  \"password\": \"{{studentPassword}}\",\r\n  \"rememberMe\": true\r\n}\r\n\r\n"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/authenticate",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get my admin account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "54371562-cab7-4051-888a-6ac53c4afab1",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "7793bcc3-5c9c-408c-b6fe-4af329fa1294",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{myAdminToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/account",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get teacher account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "da8b6df2-93bc-4a27-9821-0ddc5a5c672c",
+								"exec": [
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "41d3947f-a0a7-449e-8277-391c0af29fcf",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{teacherToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/account",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password valid token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0630474c-67ac-4fdd-93a9-f91e05e97b87",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"id": "6f0419ba-660d-4a1f-90d2-f2fc44ca88a9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{teacherToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"{{teacherPassword}}\",\r\n    \"newPassword\": \"A4SDi78sausA3y\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/account/change-password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"account",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"id": "513e3689-825d-4afa-8a9e-8c8bb09ace0a"
+		},
+		{
+			"name": "Manage tasks",
+			"item": [
+				{
+					"name": "Tasks",
+					"item": [
+						{
+							"name": "Create new task correctly",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "851617b2-770f-479d-b845-79eaccd961d4",
+										"exec": [
+											"pm.test(\"Successful POST request\", () => {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"Created\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"console.log(response)\r",
+											"\r",
+											"const newTaskId = response.id\r",
+											"pm.environment.set(\"taskId\", newTaskId);\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "465deb2a-895d-443a-b9e0-22073f962eb3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"{{$randomWords}}\",\r\n    \"answer\": \"{{$randomPhrase}}\",\r\n    \"title\": \"{{$randomVerb}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create new task with non valid token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1fd5fc39-f4ed-473b-8ba7-8e9e390a0063",
+										"exec": [
+											"pm.test(\"Failed POST request\", () => {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([401, 403]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name matches string\", () => {\r",
+											"    pm.expect(pm.response.status).to.have.oneOf([\"Unauthorized\", \"Forbidden\"]);\r",
+											"});\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "663b6e1e-a3a7-4809-b5cf-e370ab024557",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"{{$randomCatchPhrase}}\",\r\n    \"answer\": \"{{$randomWords}}\",\r\n    \"title\": \"{{$randomAbbreviation}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f658a0ac-e800-4fe8-8fbc-a4d1f41fad6b",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"console.log(response)\r",
+											"pm.test(\"Task id not a string\", () => {\r",
+											"    pm.expect(response[\"id\"]).not.to.be.string\r",
+											"})\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "c614a587-42c7-40c8-8433-9961dae841ea",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomWords}}\",\r\n    \"answer\": \"{{$randomPhrase}}\",\r\n    \"title\": \"{{$randomVerb}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks/:taskid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										":taskid"
+									],
+									"variable": [
+										{
+											"key": "taskid",
+											"value": "{{taskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "37c12bb5-3fa7-4687-9891-8cccfdcf2224",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "f8ae680b-4782-43f9-bf75-17a86b28aa41",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{taskId}},\r\n    \"text\": \"{{$randomWords}}\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks/:taskid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										":taskid"
+									],
+									"variable": [
+										{
+											"key": "taskid",
+											"value": "{{taskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update a task without specifying the task ID in the request body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1f481672-50cd-4008-95ba-173203428951",
+										"exec": [
+											"pm.test(\"Status code is 400\", () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"Bad Request\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"pm.test(\"Status returns as Bad request\", () => {\r",
+											"    pm.expect(response[\"title\"]).to.eql(\"Bad Request\")\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "584123f8-b8d2-4d18-9c34-7120cf5fce65",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"text\": \"Et quam rerum ducimus voluptatem ut\"\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks/:taskid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										":taskid"
+									],
+									"variable": [
+										{
+											"key": "taskid",
+											"value": "{{taskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a task by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2198b8d9-068f-4c08-b0e8-ae9b22c30379",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"pm.test(\"The task answer is a string\", () => {\r",
+											"    pm.expect(response[\"answer\"]).to.be.string\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "e8fedb68-ae10-46d8-8db9-47f2878ee958",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks/:taskid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										":taskid"
+									],
+									"variable": [
+										{
+											"key": "taskid",
+											"value": "{{taskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all tasks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "09fae1ca-eaa0-4831-ae8f-48ac3eedc8e8",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"const taskId = response[0].id\r",
+											"pm.test(\"Task id is not null\", () => {\r",
+											"    pm.expect(taskId).not.to.be.null\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "321066a2-8482-4eba-b683-4f40c3caafda",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "5125979f-93e4-4b6c-8583-99c873da71ac"
+				},
+				{
+					"name": "User tasks",
+					"item": [
+						{
+							"name": "Create a user task correctly",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "2edfedb9-1d21-4103-8238-4aee1f4d3c99",
+										"exec": [
+											"pm.test(\"Successful POST request\", () => {\r",
+											"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"Created\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"const newUserTaskId = response.id\r",
+											"pm.environment.set(\"userTaskId\", newUserTaskId);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "5e332081-96ad-422a-954b-a8893951d23b",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"isSolved\": false,\r\n    \"user\": {\r\n        \"id\": 1062,\r\n        \"login\": \"adele\",\r\n        \"firstName\": \"string\",\r\n        \"lastName\": \"string\",\r\n        \"email\": \"string\",\r\n        \"activated\": true,\r\n        \"langKey\": \"string\",\r\n        \"imageUrl\": \"string\",\r\n        \"resetDate\": \"2023-11-24T17:31:30.917Z\"\r\n    },\r\n    \"task\": {\r\n        \"id\": {{taskId}},\r\n        \"text\": \"hack markets\",\r\n        \"answer\": \"deposit Re-contextualized Cotton\",\r\n        \"title\": \"Small forecast utilize Plains connect\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user task with non valid data",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0e52f1f4-952c-4cce-ab66-d44e3fbb2e49",
+										"exec": [
+											"pm.test(\"Status code is 400\", () => {\r",
+											"    pm.response.to.have.status(400);\r",
+											"});\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"Bad Request\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "fe0c7b14-7496-4948-97ca-47aeaf1a1ec6",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{studentToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{userTaskId}},\r\n    \"isSolved\": true£$%,\r\n    \"user\": {\r\n        \"id\": 32257,\r\n        \"login\": \"sv_student\",\r\n        \"firstName\": \"string\",\r\n        \"lastName\": \"string\",\r\n        \"email\": \"string\",\r\n        \"activated\": true,\r\n        \"langKey\": \"string\",\r\n        \"imageUrl\": \"string\",\r\n        \"resetDate\": \"2023-11-24T17:31:30.917Z\"\r\n    },\r\n    \"task\": {\r\n        \"id\": 1559,\r\n        \"text\": \"string\",\r\n        \"answer\": \"string\",\r\n        \"title\": \"string\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-tasks/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-tasks",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{userTaskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update user task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "61fcb6c0-4ebc-43ca-9a51-5c7c5c57347e",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"const status = response.isSolved\r",
+											"pm.test(\"User task status returns as true or false\", () => {\r",
+											"    pm.expect(status).to.be.oneOf([true, false])\r",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "6a48f901-258a-4acf-97a2-dcf88fbfb1cd",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{userTaskId}},\r\n    \"isSolved\": true,\r\n    \"user\": {\r\n        \"id\": 1062,\r\n        \"login\": \"adele\",\r\n        \"firstName\": \"string\",\r\n        \"lastName\": \"string\",\r\n        \"email\": \"string\",\r\n        \"activated\": true,\r\n        \"langKey\": \"string\",\r\n        \"imageUrl\": \"string\",\r\n        \"resetDate\": \"2023-11-24T17:31:30.917Z\"\r\n    },\r\n    \"task\": {\r\n        \"id\": {{taskId}},\r\n        \"text\": \"string\",\r\n        \"answer\": \"string\",\r\n        \"title\": \"string\"\r\n    }\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-tasks/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-tasks",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{userTaskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get all user tasks",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a5a03e9c-c265-4c5e-b8e2-c40d756bab76",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"const response = pm.response.json()\r",
+											"const taskIsSolved = response.filter((userTask) => userTask.isSolved === true)\r",
+											"console.log(taskIsSolved)\r",
+											"\r",
+											"pm.environment.set(\"firstSolvedTask\", taskIsSolved[0].id);"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "159c9b3e-ac50-44ba-bcec-ac48c85ad0ea",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/user-tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-tasks"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get a user task by ID",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f318ba98-b10f-4097-a57a-261111d1f2df",
+										"exec": [
+											"pm.test(\"Status code is 200\", () => {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"OK\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "cad48ffa-b913-4873-b280-52d18d7fc890",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/user-tasks/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-tasks",
+										":id"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"type": "text",
+											"disabled": true
+										}
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{userTaskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "515807ee-b211-482c-90a0-a06cc6d69544",
+										"exec": [
+											"pm.test(\"Status code is 204\", () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"No Content\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "073ddd2c-9f0c-4047-93d0-bbb6053589f3",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-tasks/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-tasks",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{userTaskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete task",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "467fc41a-5764-4fda-bfb8-0acdee48fd68",
+										"exec": [
+											"pm.test(\"Status code is 204\", () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"No Content\");\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "2f521ca3-fc28-4dc6-97a5-a14d2412905f",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/tasks/:taskid",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"tasks",
+										":taskid"
+									],
+									"variable": [
+										{
+											"key": "taskid",
+											"value": "{{taskId}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user teacher",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "515807ee-b211-482c-90a0-a06cc6d69544",
+										"exec": [
+											"pm.test(\"Status code is 204\", () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"No Content\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "7c0da59a-0942-483c-83b5-fc3e2ed102a4",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":login"
+									],
+									"variable": [
+										{
+											"key": "login",
+											"value": "{{teacherLogin}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete user student",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "515807ee-b211-482c-90a0-a06cc6d69544",
+										"exec": [
+											"pm.test(\"Status code is 204\", () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"No Content\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "d968ee85-20f0-4191-8fed-4312ca71efab",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{myAdminToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":login"
+									],
+									"variable": [
+										{
+											"key": "login",
+											"value": "{{studentLogin}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete my admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "515807ee-b211-482c-90a0-a06cc6d69544",
+										"exec": [
+											"pm.test(\"Status code is 204\", () => {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Status code name has string\", () => {\r",
+											"    pm.response.to.have.status(\"No Content\");\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"id": "a249fa57-b684-4858-bb46-00394ea75866",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true,
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/admin/users/:login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"admin",
+										"users",
+										":login"
+									],
+									"variable": [
+										{
+											"key": "login",
+											"value": "{{myAdminLogin}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"id": "f2229268-d9f5-4edb-839d-7dec1bb4e70e"
+				}
+			],
+			"id": "fa49d20e-5314-4d5f-ace1-297568532886"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f6e1bf02-0fac-43c8-ae30-54906d346b3e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "238d85da-6a0e-411a-bbf6-f8dc41470ee7",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "ceec4c2e-81f9-4050-a613-bf42339f3861",
+			"key": "baseUrl",
+			"value": "https://sqlverifier-50d286d70656.herokuapp.com"
+		},
+		{
+			"id": "37328869-c2da-4945-bcff-d5965e5caa1e",
+			"key": "Admin jessica email",
+			"value": "jessica@gmail.com",
+			"type": "string"
+		},
+		{
+			"id": "37ebfb46-05ff-4ced-b5a5-3e23c1ebf877",
+			"key": "Admin jessica password",
+			"value": "dolomiti2023",
+			"type": "string"
+		},
+		{
+			"id": "ffd08f0d-311d-429b-8284-d61d9b998198",
+			"key": "Teacher email",
+			"value": "mark.teacher@gmail.com",
+			"type": "string"
+		},
+		{
+			"id": "da212dca-e04b-4073-8d19-cc9899687299",
+			"key": "Token admin",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "d3523c02-3910-43c7-ad3f-7d55334c650c",
+			"key": "Token Jessica admin",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "a5a856f5-8339-41c2-819e-a48a5466349a",
+			"key": "Token Mark teacher",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
